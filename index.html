@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriSim AI - Lab Pertanian Virtual</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🧪 AgriSim AI</h1>
+        <p>Laboratorium Eksperimen Pertanian Digital</p>
+    </header>
+
+    <main>
+        <section id="simulator">
+            <h2>Simulasi pH Tanah</h2>
+            <input type="range" id="phSlider" min="0" max="14" value="7">
+            <p>Nilai pH: <span id="phValue">7</span></p>
+        </section>
+
+        <section id="ai-result">
+            <h3>Saran Agronomis AI:</h3>
+            <div id="aiText">Gerakkan slider untuk mulai analisis...</div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
