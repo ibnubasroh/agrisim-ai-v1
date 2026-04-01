@@ -2,16 +2,26 @@ const slider = document.getElementById('phSlider');
 const display = document.getElementById('phValue');
 const aiText = document.getElementById('aiText');
 
-slider.oninput = function() {
-    const value = this.value;
-    display.innerHTML = value;
+// Daftar rekomendasi berdasarkan pH
+const recommendations = {
+    acid: "Tanah Terlalu Asam. Padi akan sulit menyerap nutrisi. Segera tambahkan kapur pertanian (Dolomit).",
+    ideal: "pH Ideal! Sangat cocok untuk tanaman pangan. Pertahankan dengan pupuk organik.",
+    alkaline: "Tanah Terlalu Basa. Pertumbuhan tanaman akan terhambat. Tambahkan sulfur atau kompos daun."
+};
 
-    // Logika sederhana AI
-    if (value < 6) {
-        aiText.innerHTML = "Tanah Terlalu Asam! Tambahkan kapur dolomit agar tanaman padi tumbuh maksimal.";
-    } else if (value > 8) {
-        aiText.innerHTML = "Tanah Terlalu Basa! Gunakan sulfur atau pupuk organik untuk menetralkan.";
+slider.oninput = function() {
+    const v = parseFloat(this.value);
+    display.innerHTML = v;
+
+    // Perubahan warna teks agar interaktif
+    if (v < 6) {
+        aiText.innerHTML = recommendations.acid;
+        aiText.style.color = "#fbbf24"; // Oranye/Kuning
+    } else if (v >= 6 && v <= 7.5) {
+        aiText.innerHTML = recommendations.ideal;
+        aiText.style.color = "#4ade80"; // Hijau
     } else {
-        aiText.innerHTML = "Kondisi Ideal! Tanah sangat cocok untuk pertumbuhan tanaman pangan.";
+        aiText.innerHTML = recommendations.alkaline;
+        aiText.style.color = "#60a5fa"; // Biru
     }
 }
