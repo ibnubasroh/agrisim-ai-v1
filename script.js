@@ -1,27 +1,35 @@
-const slider = document.getElementById('phSlider');
-const display = document.getElementById('phValue');
-const aiText = document.getElementById('aiText');
-
-// Daftar rekomendasi berdasarkan pH
-const recommendations = {
-    acid: "Tanah Terlalu Asam. Padi akan sulit menyerap nutrisi. Segera tambahkan kapur pertanian (Dolomit).",
-    ideal: "pH Ideal! Sangat cocok untuk tanaman pangan. Pertahankan dengan pupuk organik.",
-    alkaline: "Tanah Terlalu Basa. Pertumbuhan tanaman akan terhambat. Tambahkan sulfur atau kompos daun."
+// 1. Data/State (Apa yang diingat aplikasi)
+const state = {
+    ph: 7,
+    status: "Ideal",
+    color: "#4ade80"
 };
 
-slider.oninput = function() {
-    const v = parseFloat(this.value);
-    display.innerHTML = v;
+// 2. Logika Perubahan (Update State)
+function updateTampilan() {
+    const display = document.getElementById('phValue');
+    const aiText = document.getElementById('aiText');
+    
+    display.innerHTML = state.ph;
+    aiText.innerHTML = getSaran(state.ph);
+    aiText.style.color = state.color;
+}
 
-    // Perubahan warna teks agar interaktif
+function getSaran(v) {
     if (v < 6) {
-        aiText.innerHTML = recommendations.acid;
-        aiText.style.color = "#fbbf24"; // Oranye/Kuning
-    } else if (v >= 6 && v <= 7.5) {
-        aiText.innerHTML = recommendations.ideal;
-        aiText.style.color = "#4ade80"; // Hijau
+        state.color = "#fbbf24";
+        return "⚠️ Tanah ASAM: Perlu Kapur Dolomit.";
+    } else if (v > 8) {
+        state.color = "#60a5fa";
+        return "⚠️ Tanah BASA: Perlu Sulfur/Kompos.";
     } else {
-        aiText.innerHTML = recommendations.alkaline;
-        aiText.style.color = "#60a5fa"; // Biru
+        state.color = "#4ade80";
+        return "✅ Tanah IDEAL: Siap Tanam Padi!";
     }
 }
+
+// 3. Event Listener (Aksi User)
+document.getElementById('phSlider').oninput = function() {
+    state.ph = this.value; // Simpan ke state
+    updateTampilan();      // Gambar ulang layar
+};
